@@ -1,20 +1,66 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import {AppRegistry} from 'react-native'
+import { SafeAreaView, View, FlatList, StyleSheet, Text, StatusBar, Image} from 'react-native';
+import react from "react";
 
-export default function App() {
+const DATA = [
+  {
+    id: '1',
+    title: 'Toyota',
+    src:require('./src/img/toyota-suv-compacto-1417793.jpg'),
+  },
+  {
+    id:'2',
+    title: 'Mazda',
+    src:require('./src/img/descarga.jpeg'),
+  },
+  {
+    id:'3',
+    title:'Mitsubishi',
+    src:require('./src/img/Foto-Paleta-color-621x386px-07-3.png'),
+  },
+];
+
+const Item = ({title, img}) => (
+  <View style={styles.item}>
+  <Text style={styles.title}>{title}</Text>
+  <Image style={styles.img} source={img} />
+  </View>
+);
+export default function App(){
+  const renderItem = ({ item }) => (
+    <Item title={item.title} img={item.src} />
+  );
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaView style = {styles.container}>
+    <FlatList 
+    data = {DATA}
+    renderItem={renderItem}
+    keyExtractor={item => item.id}
+    />
+   </SafeAreaView> 
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+  container:{
+    flex:1,
+    marginTop: StatusBar.currentHeight || 0,
   },
+  item : {
+    backgroundColor: '#f9c2ff',
+    padding:20,
+    marginVertical:8,
+    marginHorizontal:16,
+    alignItems:'center'
+  },
+  title : {
+    fontSize:32,
+  },
+  img:{
+    width:200,
+    height:125,
+    borderWidth:2,
+    borderColor: 'd35647' 
+  }
 });
